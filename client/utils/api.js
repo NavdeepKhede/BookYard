@@ -90,3 +90,8 @@ export const DeleteBookRequestAPI = async (reservationId) => {
   const { delete: del } = useAPI();
   return del(`/user/reservation/${reservationId}`);
 };
+//
+export const DeleteUserAPI = async (userId) => {
+  const { delete: del } = useAPI();
+  return del(`/user/users/${userId}`);
+};

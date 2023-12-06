@@ -2,6 +2,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { queryClient } from "../utils/queryClient";
 
 import {
+  DeleteUserAPI,
   GetAllReservationsAPI,
   GetAllUsersAPI,
   UpdateReservationStatusAPI,
@@ -85,6 +86,23 @@ export function useReservationStatus() {
     onError: () => {
       console.error("Error in updating reservation status");
       throw new Error("Error in updating reservation status.");
+    },
+  });
+}
+
+export function useDeleteUser() {
+  return useMutation({
+    mutationFn: (userId) => DeleteUserAPI(userId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["all-users"] });
+      toast.success("User deleted successfully.", {
+        duration: 6000,
+        position: "bottom-center",
+      });
+    },
+    onError: () => {
+      console.error("Error in deleting user");
+      throw new Error("Error in deleting user");
     },
   });
 }

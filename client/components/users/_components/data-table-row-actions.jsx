@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { MoreHorizontal, ShieldCheck } from "lucide-react";
+import { MoreHorizontal, ShieldCheck, Trash } from "lucide-react";
 
 import { Button } from "../../ui/button";
 import {
@@ -9,10 +9,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
-import { useUpdateRole } from "../../../hooks/useAdmin"
+import { useDeleteUser, useUpdateRole } from "../../../hooks/useAdmin";
 
 export function DataTableRowActions({ row }) {
-  const updateRole = useUpdateRole()
+  const updateRole = useUpdateRole();
+  const deleteUser = useDeleteUser();
 
   return (
     <DropdownMenu>
@@ -35,22 +36,40 @@ export function DataTableRowActions({ row }) {
         <DropdownMenuSeparator />
         <DropdownMenuItem
           className="flex items-center gap-2"
-          onClick={() => updateRole.mutate({
-            userId: row.original._id,
-            role: "Member"
-          })}
+          onClick={() =>
+            updateRole.mutate({
+              userId: row.original._id,
+              role: "Member",
+            })
+          }
         >
           Member
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
           className="text-rose-700 flex items-center gap-2 hover:bg-rose-50! hover:text-rose-800!"
-          onClick={() => updateRole.mutate({
-            userId: row.original._id,
-            role: "Admin"
-          })}
+          onClick={() =>
+            updateRole.mutate({
+              userId: row.original._id,
+              role: "Admin",
+            })
+          }
         >
           <ShieldCheck className="h-4 w-4" /> Admin
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          className="flex items-center gap-2 font-medium"
+          disabled
+        >
+          Delete User
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          className="text-rose-700 flex items-center gap-2 hover:bg-rose-50! hover:text-rose-800!"
+          onClick={() => deleteUser.mutate(row.original._id)}
+        >
+          <Trash className="h-4 w-4" /> Delete
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
