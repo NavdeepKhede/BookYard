@@ -2,14 +2,14 @@
   "name": "lms-library-management-system-by-navdeep",
   "version": "1.0.0",
   "description": "lms build using mern stack",
-  "main": "src/server.js",
+  "main": "index.js",
   "engines": {
     "node": "18.x"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/server.js",
-    "dev": "nodemon src/srever.js",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "build": "npm install"
   },
   "keywords": [
