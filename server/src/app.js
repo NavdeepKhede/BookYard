@@ -20,8 +20,6 @@ const corsOptions = {
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   allowedHeaders: "Content-Type,Authorization",
   credentials: true,
-  samesite: 'None',
-  secure: true,
   optionsSuccessStatus: 204,
 };
 
