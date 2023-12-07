@@ -89,6 +89,7 @@ export function useLogOut() {
         position: "bottom-center",
       });
       navigate("/login");
+      window.location.reload();
     },
     onError: (error) => {
       console.error("Error during logout:", error);

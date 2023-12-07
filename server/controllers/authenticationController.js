@@ -124,8 +124,16 @@ const logout = async (req, res, next) => {
   try {
     req.user.tokens = req.user.tokens.filter((token) => token.token !== req.cookies.refresh_token);
     await req.user.save();
-    res.clearCookie('refresh_token');
-    res.clearCookie('access_token');
+    res.clearCookie('refresh_token', {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+    });
+    res.clearCookie('access_token', {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+    });
     res.status(200).json({ message: 'Logout successful' });
   } catch (error) {
     next(error);
