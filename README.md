@@ -109,6 +109,8 @@ Follow these steps to get your development environment running:
   - Status Code: 200 OK
   - Body: User object
 
+**NOTE:** `By default every user has role set to "Member". To create your very first admin, you need to manually change the role to "Admin" in the database to use admin related routes and functionalities.`
+
 ### User Login
 
 - **Endpoint:** `POST auth/login`

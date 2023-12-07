@@ -43,7 +43,7 @@ const BookLibrary = () => {
     <div className="p-4 sm:px-8 w-full flex flex-col space-y-2 relative">
       <h1 className="text-lg font-semibold uppercase">Book Library</h1>
       <ScrollArea className="h-full max-h-[calc(100vh-15rem)] py-4 ">
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
           {booksLoading && <PlaceHolder />}
           {!booksLoading && books.map((book) => (
             <BookItem key={book._id} data={book} />

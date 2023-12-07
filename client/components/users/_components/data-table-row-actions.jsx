@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { MoreHorizontal, ShieldCheck, Trash } from "lucide-react";
+import { MoreHorizontal, ShieldCheck, Trash, UserRound } from "lucide-react";
 
 import { Button } from "../../ui/button";
 import {
@@ -35,7 +35,7 @@ export function DataTableRowActions({ row }) {
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 text-orange-900 font-medium"
           onClick={() =>
             updateRole.mutate({
               userId: row.original._id,
@@ -43,11 +43,11 @@ export function DataTableRowActions({ row }) {
             })
           }
         >
-          Member
+          <UserRound className="h-4 w-4" /> Member
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
-          className="text-rose-700 flex items-center gap-2 hover:bg-rose-50! hover:text-rose-800!"
+          className="text-violet-900 font-medium flex items-center gap-2 hover:bg-violet-50! hover:text-violet-800!"
           onClick={() =>
             updateRole.mutate({
               userId: row.original._id,

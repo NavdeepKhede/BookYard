@@ -9,7 +9,7 @@ const BookItem = ({ data }) => {
       key={data._id}
       className="grid grid-cols-1 sm:grid-cols-2 gap-2 p-2 border rounded-xl border-slate-200 shadow-inner"
     >
-      <div className="relative flex items-center justify-center">
+      <div className="relative flex items-center justify-center bg-zinc-200 rounded-l-md">
         <img
           src={data.bookImage}
           alt={data.title}

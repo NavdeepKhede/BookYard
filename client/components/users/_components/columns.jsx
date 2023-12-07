@@ -72,20 +72,20 @@ export const columns = [
       );
     },
   },
-  {
-    accessorKey: "reservations",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Reservation Count" />
-    ),
-    cell: ({ row }) => {
-      const data = row.getValue("reservations").length;
-      return (
-        <div className="text-muted-foreground">
-          <span>{data}</span>
-        </div>
-      );
-    },
-  },
+  // {
+  //   accessorKey: "reservations",
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title="Reservation Count" />
+  //   ),
+  //   cell: ({ row }) => {
+  //     const data = row.getValue("reservations");
+  //     return (
+  //       <div className="text-muted-foreground">
+  //         <span>{data}</span>
+  //       </div>
+  //     );
+  //   },
+  // },
   {
     accessorKey: "role",
     header: ({ column }) => (

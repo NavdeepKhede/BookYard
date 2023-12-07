@@ -3,6 +3,7 @@ import { Checkbox } from "../../ui/checkbox";
 import { statuses } from "../data";
 import { DataTableColumnHeader } from "../../common/data-table-column-header";
 import { DataTableRowActions } from "./data-table-row-actions";
+import { cn } from "../../../lib/utils";
 
 export const columns = [
   {
@@ -95,7 +96,7 @@ export const columns = [
     cell: ({ row }) => {
       const genre = row.getValue("genre");
       return (
-        <div className="font-normal p-1 px-4 w-fit bg-sky-50 rounded-full text-center">
+        <div className="font-normal p-1 px-4 w-full bg-sky-50 border rounded-full text-center">
           <span>{genre || "-"}</span>
         </div>
       );
@@ -119,9 +120,9 @@ export const columns = [
       }
 
       return (
-        <div className="flex w-[100px] items-center">
+        <div className={cn("flex w-[100px] items-center", row.getValue("availability") ? "text-teal-600": "text-rose-600")}>
           {status.icon && (
-            <status.icon className="mr-2 h-4 w-4 text-muted-foreground" />
+            <status.icon className="mr-2 h-4 w-4" />
           )}
           <span>{status.label}</span>
         </div>
