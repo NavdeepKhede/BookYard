@@ -84,17 +84,15 @@ export function useLogOut() {
   return useMutation({
     mutationFn: LogoutUserAPI,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["currentUser"] });
       toast.success("Logged Out successfully.", {
         duration: 6000,
         position: "bottom-center",
       });
       navigate("/login");
-      window.location.reload();
     },
     onError: (error) => {
-      console.error("Error during signout:", error);
-      throw new Error("Error during signout");
+      console.error("Error during logout:", error);
+      throw new Error("Error during logout");
     },
   });
 }
