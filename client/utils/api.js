@@ -71,6 +71,11 @@ export const GetAllReservationsAPI = async () => {
   return get("/user/reservations/all");
 };
 //
+export const UpdateUser = async (userId, data) => {
+  const { patch } = useAPI();
+  return patch(`/user/edit/${userId}`, data);
+};
+//
 export const UpdateUserRoleAPI = async (userId, role) => {
   const { put } = useAPI();
   return put(`/user/users/${userId}`, { role });

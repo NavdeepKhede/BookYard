@@ -10,6 +10,7 @@ const {
   updateUserRole,
   deleteUser,
   deleteReserveRequest,
+  updateUser,
 } = require("../controllers/userController");
 const {
   getAllReservations,
@@ -42,6 +43,20 @@ router.put(
   authMiddleware,
   checkAdminRole,
   updateUserRole
+);
+
+// Update User Details
+router.patch(
+  "/edit/:userId",
+  [
+    param("userId").isMongoId(),
+    body("name").optional().isString(),
+    body("email").notEmpty().isEmail().normalizeEmail(),
+    body("password").optional().isLength({ min: 6 }),
+  ],
+  validate,
+  authMiddleware,
+  updateUser
 );
 
 // Reserve Book request

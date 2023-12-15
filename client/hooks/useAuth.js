@@ -6,6 +6,7 @@ import {
   LogoutUserAPI,
   RefreshAccessTokenAPI,
   RegisterUserAPI,
+  UpdateUser,
 } from "../utils/api";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -107,6 +108,23 @@ export function useRefreshToken() {
     onError: (error) => {
       console.error("Error during token refresh:", error);
       throw new Error("Error during token refresh");
+    },
+  });
+}
+
+export function useEditProfile() {
+  return useMutation({
+    mutationFn: ({ userId, data }) => UpdateUser(userId, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["currentUser"] });
+      toast.success("Profile updated successfully.", {
+        duration: 5000,
+        position: "bottom-center",
+      });
+    },
+    onError: (error) => {
+      console.error("Error during editing profile:", error);
+      throw new Error("Error during editing profile");
     },
   });
 }

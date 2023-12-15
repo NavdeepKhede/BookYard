@@ -4,6 +4,7 @@ import BookItem from "@/components/bookItem";
 import { useBooks } from "@/hooks/useBooks";
 import { useCurrentUser } from "@/hooks/useAuth";
 import AdminDashboard from "./AdminDashboard";
+import { useLocation } from "react-router-dom";
 
 const PlaceHolder = () => {
   return (
@@ -32,11 +33,25 @@ const PlaceHolder = () => {
 };
 
 const BookLibrary = () => {
+  const location = useLocation();
+  const available = new URLSearchParams(location.search).get("available");
   const { books, booksLoading, booksError } = useBooks();
-  const {isAdmin} = useCurrentUser();
+  const { isAdmin } = useCurrentUser();
 
-  if(isAdmin) {
-    return <AdminDashboard totalBooks={books.length} />
+  if (isAdmin) {
+    return <AdminDashboard totalBooks={books.length} />;
+  }
+
+  let filteredBooks;
+
+  if (available) {
+    filteredBooks = books.filter((book) => {
+      const status = available === "true" ? true : false;
+      const regex = new RegExp(`\\b${status}\\b`, "g");
+      return regex.test(book.availability);
+    });
+  } else {
+    filteredBooks = books;
   }
 
   return (
@@ -45,9 +60,10 @@ const BookLibrary = () => {
       <ScrollArea className="h-full max-h-[calc(100vh-15rem)] py-4 ">
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
           {booksLoading && <PlaceHolder />}
-          {!booksLoading && books.map((book) => (
-            <BookItem key={book._id} data={book} />
-          ))}
+          {!booksLoading &&
+            filteredBooks.map((book) => (
+              <BookItem key={book._id} data={book} />
+            ))}
           {booksError && (
             <div className="h-[200px] rounded-md w-full flex items-center justify-center text-rose-700 bg-rose-50 font-medium">
               Something went wrong!

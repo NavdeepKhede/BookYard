@@ -24,27 +24,31 @@ import { Button } from "../ui/button";
 
 import { useModal } from "../../hooks/useModal";
 import { Loader2 } from "lucide-react";
-import { useEffect } from "react";
-import { useCurrentUser } from "../../hooks/useAuth";
+import { useEffect, useState } from "react";
+import { useCurrentUser, useEditProfile } from "../../hooks/useAuth";
 
 const formSchema = z.object({
   name: z
     .string({
       required_error: "Name is required",
     })
-    .min(1),
+    .min(1)
+    .optional(),
   email: z
     .string({
       required_error: "Email name is required",
     })
     .email({
       message: "Invalid Email Address",
-    }),
+    })
+    .optional(),
   password: z.string().min(6).optional(),
 });
 
 export const UserProfileModal = () => {
+  const [isEdit, setIsEdit] = useState(false);
   const { user } = useCurrentUser();
+  const editProfile = useEditProfile();
   const { isOpen, onClose, type, data } = useModal();
   const isModalOpen = isOpen && type === "userProfile";
 
@@ -56,7 +60,12 @@ export const UserProfileModal = () => {
 
   const onSubmit = async (vals) => {
     try {
-      console.log(vals);
+      editProfile.mutate({
+        userId: user._id,
+        data: vals,
+      });
+      form.reset();
+      onClose();
     } catch (error) {
       console.log(error);
     }
@@ -79,7 +88,7 @@ export const UserProfileModal = () => {
             Profile Settings
           </DialogTitle>
           <DialogDescription className="text-center text-zinc-500">
-            Update your profile details. (feature under-development!)
+            Update your profile details.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -88,6 +97,7 @@ export const UserProfileModal = () => {
               <FormField
                 control={form.control}
                 name="name"
+                disabled={isLoading || !isEdit}
                 defaultValues={data.title}
                 render={({ field }) => (
                   <FormItem>
@@ -96,7 +106,6 @@ export const UserProfileModal = () => {
                     </FormLabel>
                     <FormControl>
                       <Input
-                        disabled={isLoading}
                         className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
                         placeholder="Enter your name"
                         {...field}
@@ -109,6 +118,7 @@ export const UserProfileModal = () => {
               <FormField
                 control={form.control}
                 name="email"
+                disabled={isLoading || !isEdit}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
@@ -116,7 +126,6 @@ export const UserProfileModal = () => {
                     </FormLabel>
                     <FormControl>
                       <Input
-                        disabled={isLoading}
                         className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
                         placeholder="Enter your email address"
                         type="email"
@@ -130,6 +139,7 @@ export const UserProfileModal = () => {
               <FormField
                 control={form.control}
                 name="password"
+                disabled={isLoading || !isEdit}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
@@ -137,16 +147,16 @@ export const UserProfileModal = () => {
                     </FormLabel>
                     <FormControl>
                       <Input
-                        disabled={isLoading}
                         {...field}
-                        value="password"
                         className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
                         placeholder="Enter your password"
                         type="password"
                       />
                     </FormControl>
                     <FormDescription>
-                      This is not your actual password.
+                      {isEdit
+                        ? "Enter new password to update it."
+                        : "Password is not available due to security reasons."}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -154,10 +164,17 @@ export const UserProfileModal = () => {
               />
             </div>
             <DialogFooter className="px-6 py-4 bg-gray-100">
-              <Button disabled={isLoading} className="flex items-center">
-                {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : ""}{" "}
-                Update
-              </Button>
+              {isEdit && (
+                <Button disabled={isLoading} className="flex items-center">
+                  {isLoading ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    ""
+                  )}{" "}
+                  Update
+                </Button>
+              )}
+              {!isEdit && <Button onClick={() => setIsEdit(true)}>Edit</Button>}
             </DialogFooter>
           </form>
         </Form>
