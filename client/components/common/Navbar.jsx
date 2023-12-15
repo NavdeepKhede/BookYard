@@ -4,8 +4,11 @@ import Logo from "../../src/assets/BookYardLogo.png";
 import { MobileSidebar } from "../mobile-sidebar";
 import { UserNav } from "./user-nav";
 import { Search } from "../search";
+import { useCurrentUser } from "../../hooks/useAuth";
 
 const Navbar = () => {
+  const { isAdmin } = useCurrentUser();
+
   return (
     <div className="px-4 py-2 sm:px-6 flex justify-between items-center border-b border-b-slate-200">
       <div className="flex items-center gap-3">
@@ -19,7 +22,8 @@ const Navbar = () => {
           </h1>
         </Link>
       </div>
-      <Search />
+
+      {!isAdmin && <Search />}
 
       <UserNav />
     </div>
