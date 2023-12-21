@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
-import FooterLinks from "./FooterLinks";
+// import FooterLinks from "./FooterLinks";
 
 const Footer = () => {
   return (
     <div className="border-t border-t-slate-200 w-full p-6 sm:p-8 flex flex-col lg:flex-row items-center justify-between gap-y-2 text-xs text-slate-500">
       <p>
-        © 2023{" "}
-        <span>
+        © 2023{" "}BookYard
+{/*         <span>
           <FooterLinks />
-        </span>
+        </span> */}
         . All rights reserved.
       </p>
       <div className="flex flex-col md:flex-row items-center gap-1 gap-x-10">
